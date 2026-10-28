@@ -1,0 +1,249 @@
+### 1. Cadastrar Funcionário 1
+POST http://localhost:3000/funcionario
+Content-Type: application/json
+
+{
+    "nome": "Carlos Silva",
+    "email": "carlos@logistica.com",
+    "senha": "123"
+}
+
+### 2. Cadastrar Funcionário 2
+POST http://localhost:3000/funcionario
+Content-Type: application/json
+
+{
+    "nome": "Maria Souza",
+    "email": "maria@logistica.com",
+    "senha": "123"
+}
+
+### 3. Cadastrar Funcionário 3
+POST http://localhost:3000/funcionario
+Content-Type: application/json
+
+{
+    "nome": "Joao Lima",
+    "email": "joao@logistica.com",
+    "senha": "123"
+}
+
+### 4. Login com senha incorreta (401)
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "carlos@logistica.com",
+    "senha": "errada"
+}
+
+### 5. Login (guarda o token)
+# @name loginReq
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "carlos@logistica.com",
+    "senha": "123"
+}
+
+### 6. Rota protegida sem token (401)
+GET http://localhost:3000/motoristas
+
+### 7. Motorista com CPF inválido (400)
+POST http://localhost:3000/motorista
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "nome": "Teste",
+    "cnh": "111",
+    "cpf": "123",
+    "telefone": "48900000000"
+}
+
+### 8. Cadastrar Motorista 1
+POST http://localhost:3000/motorista
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "nome": "Pedro Alves",
+    "cnh": "11111111111",
+    "cpf": "12345678912",
+    "telefone": "48999990001"
+}
+
+### 9. Cadastrar Motorista 2
+POST http://localhost:3000/motorista
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "nome": "Lucas Rocha",
+    "cnh": "22222222222",
+    "cpf": "22233344455",
+    "telefone": "48999990002"
+}
+
+### 10. Cadastrar Motorista 3
+POST http://localhost:3000/motorista
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "nome": "Rafael Costa",
+    "cnh": "33333333333",
+    "cpf": "98765432100",
+    "telefone": "48999990003"
+}
+
+### 11. Listar Motoristas
+GET http://localhost:3000/motoristas
+Authorization: {{loginReq.response.body.token}}
+
+### 12. Consultar Motorista por código
+GET http://localhost:3000/motorista/1
+Authorization: {{loginReq.response.body.token}}
+
+### 13. Buscar Motorista por nome
+GET http://localhost:3000/motorista/buscarNome/Pedro
+Authorization: {{loginReq.response.body.token}}
+
+### 14. Buscar nome inexistente (404)
+GET http://localhost:3000/motorista/buscarNome/Inexistente
+Authorization: {{loginReq.response.body.token}}
+
+### 15. Atualizar Motorista 1
+PUT http://localhost:3000/motorista/1
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "telefone": "48988880000"
+}
+
+### 16. Cadastrar Carga 1
+POST http://localhost:3000/carga
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "descricao": "Caixas de eletrônicos",
+    "peso": 850.5,
+    "volume": 12.3,
+    "codRastreio": 100001,
+    "idMotorista": 1
+}
+
+### 17. Cadastrar Carga 2
+POST http://localhost:3000/carga
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "descricao": "Material de construção",
+    "peso": 2300,
+    "volume": 25,
+    "codRastreio": 100002,
+    "idMotorista": 2
+}
+
+### 18. Cadastrar Carga 3
+POST http://localhost:3000/carga
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "descricao": "Alimentos não perecíveis",
+    "peso": 1200,
+    "volume": 18.5,
+    "codRastreio": 100003,
+    "idMotorista": 3
+}
+
+### 19. Carga com motorista inexistente (404)
+POST http://localhost:3000/carga
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "descricao": "Teste",
+    "peso": 1,
+    "volume": 1,
+    "codRastreio": 999,
+    "idMotorista": 99
+}
+
+### 20. Listar Cargas
+GET http://localhost:3000/cargas
+Authorization: {{loginReq.response.body.token}}
+
+### 21. Cadastrar Entrega 1
+POST http://localhost:3000/entrega
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "cidadeDestino": "Florianópolis",
+    "status": "TRANSITO",
+    "data": "2026-11-10",
+    "hora": "14:00:00",
+    "idCarga": 1
+}
+
+### 22. Cadastrar Entrega 2
+POST http://localhost:3000/entrega
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "cidadeDestino": "Joinville",
+    "status": "TRANSITO",
+    "data": "2026-11-05",
+    "hora": "10:30:00",
+    "idCarga": 2
+}
+
+### 23. Cadastrar Entrega 3
+POST http://localhost:3000/entrega
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "cidadeDestino": "Blumenau",
+    "status": "TRANSITO",
+    "data": "2026-11-15",
+    "hora": "16:00:00",
+    "idCarga": 3
+}
+
+### 24. Atualizar status da Entrega 2 para ENTREGUE
+PUT http://localhost:3000/entrega/2
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "status": "ENTREGUE"
+}
+
+### 25. Status inválido (400)
+PUT http://localhost:3000/entrega/2
+Content-Type: application/json
+Authorization: {{loginReq.response.body.token}}
+
+{
+    "status": "PERDIDO"
+}
+
+### 26. Listar Entregas por data crescente (05/11, 10/11, 15/11)
+GET http://localhost:3000/entregas?ordem=ASC
+Authorization: {{loginReq.response.body.token}}
+
+### 27. Listar Entregas por data decrescente (15/11, 10/11, 05/11)
+GET http://localhost:3000/entregas?ordem=DESC
+Authorization: {{loginReq.response.body.token}}
+
+### 28. Deletar Motorista 3
+DELETE http://localhost:3000/motorista/3
+Authorization: {{loginReq.response.body.token}}
